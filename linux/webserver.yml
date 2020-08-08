@@ -1,0 +1,43 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+          - name: Installing apache webserver on Centos
+            yum:
+                    name: httpd
+                    state: present 
+            when:
+                    ansible_distribution=='CentOS'
+             
+          - name: start and enabling of service
+            service:
+                    name: httpd
+                    state: started
+                    enabled: yes
+            when:
+                    ansible_distribution=='CentOS'
+
+          - name: firewall allow
+            firewalld:
+                    service: http
+                    state: enabled
+                    permanent: yes
+                    immediate: yes
+            when:
+                    ansible_distribution=='CentOS'
+
+
+          - name: Installing apache2 webserver on Ubuntu
+            package:
+                    name: apache2
+                    state: present
+            when:
+                    ansible_distribution=='Ubuntu'
+
+
+
+
+
+
+
+         
