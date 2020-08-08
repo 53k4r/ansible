@@ -1,0 +1,13 @@
+---
+- hosts: localhost
+  connection: local
+  tasks:
+   - name: launch instance
+     ec2:
+       region: 
+       image: 
+       instance_type: t2.micro
+       count: 1
+       group_id: 
+       key_name: 
+       wait: yes
