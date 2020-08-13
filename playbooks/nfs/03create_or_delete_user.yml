@@ -1,0 +1,13 @@
+---
+ - name: ensure user is present in linux servers
+   hosts: all
+   tasks:
+    
+    - name: ensure user is present
+      user:
+        name: user1
+        state: present
+        shell: /bin/csh
+        password: $1$zeSRwL9d$XVzIhkMMSr/taYcC01yC60
+        groups: wheel
+...

@@ -1,0 +1,21 @@
+---
+ - name: using basic modules
+   hosts: all
+   tasks:
+
+    - name: create a directory
+      file:
+       path: /tmp/common
+       state: directory
+
+    - name: create a file
+      file:
+       path: /tmp/common/info
+       state: touch
+
+    - name: add content
+      lineinfile:
+       path: /tmp/common/info
+       line: 'This server is managed by ansible'
+       state: present
+...

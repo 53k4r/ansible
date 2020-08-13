@@ -1,0 +1,27 @@
+---
+ - name: implementation of apache web server in rhel server
+   hosts: all
+   tasks:
+
+    - name: install apache software
+      dnf:
+        name: httpd
+        state: present
+
+    - name: start and enable service
+      service:
+        name: httpd
+        state: started
+
+    - name: copy a sample site
+      copy:
+        src: ../files
+        dest: /var/www/html
+
+    - name: allow http via firewall
+      firewalld:
+        service: http
+        state: enabled
+        permanent: yes
+        immediate: yes
+...

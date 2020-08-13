@@ -1,0 +1,17 @@
+---
+ - name: nfs client configuration
+   hosts: nfsclient
+   tasks:
+    
+    - name: install software
+      dnf:
+        name: nfs-utils
+        state: present
+
+    - name: mount the share
+      mount:
+        src: 15.206.148.83:/share1
+        path: /local1
+        fstype: nfs
+        state: mounted
+...

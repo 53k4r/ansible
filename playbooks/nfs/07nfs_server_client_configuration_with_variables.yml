@@ -1,0 +1,52 @@
+---
+ - name: implement nfs server
+   hosts: nfsserver
+   vars:
+    share_path: /share3
+   tasks:
+    
+    - name: install software
+      dnf:
+        name: nfs-utils
+        state: present
+
+    - name: start and enable service
+      service:
+        name: nfs-server
+        state: started
+        enabled: yes
+
+    - name: create share
+      file:
+        path: '{{share_path}}'
+        state: directory
+
+    - name: edit configuration
+      lineinfile:
+        path: /etc/exports
+        line: '{{share_path}} 3.7.248.194(ro)'
+        state: present
+
+    - name: update the share
+      shell:
+        cmd: exportfs -r 
+
+ - name: nfs client configuration
+   hosts: nfsclients
+   vars:
+    share_path: /share3
+    mount_point: /local3
+   tasks:
+    
+    - name: install software
+      dnf:
+        name: nfs-utils
+        state: present
+
+    - name: mount the share
+      mount:
+        src: 15.206.148.83:{{share_path}}
+        path: '{{mount_point}}'
+        fstype: nfs
+        state: mounted
+...
