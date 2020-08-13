@@ -1,0 +1,25 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+          - name: installing updates on rhel
+            dnf:
+                    name: '*'
+                    state: latest
+                    update_only: yes
+                    update_cache: yes
+            when: ansible_distribution == "RedHat"        
+        
+          - name: installing updates on centos
+            dnf:
+                    name: '*'
+                    state: latest
+                    update_only: yes
+                    update_cache: yes
+            when: ansible_distribution == "CentOS" 
+
+          - name: installing updates on ubuntu
+            apt:
+                    upgrade: dist
+                    update_cache: yes
+            when: ansible_distribution == "Ubuntu"        
