@@ -1,0 +1,18 @@
+---
+- hosts: localhost
+  tasks:
+
+          - name: generating ssh key pair
+            openssh_keypair:
+                    path: ~/.ssh/id_rsa
+                    state: present
+                    type: rsa
+- hosts: all
+  become: yes
+  tasks:
+          - name: copying ssh public key pair to inventory hosts
+            authorized_key:
+                    user: root
+                    state: present
+                    key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+
