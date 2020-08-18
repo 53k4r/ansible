@@ -1,0 +1,64 @@
+Step1
+*****************************************************************
+- For aws authentication need to creat .boto file under home directory of control node and permission should be 400
+- on the other way need export environment variable using below method
+
+1.Temporary env var setup 
+
+#export AWS_ACCESS_KEY_ID='AK123'
+#export AWS_SECRET_ACCESS_KEY='abc123'
+
+2.permanent setup
+
+#touch .boto
+#chmod 400 .boto
+#vim .boto
+
+configuration details available in boto file in same directory
+*******************************************************************
+
+Step2
+*******************************************************************
+- Download ec2.py and ec2.ini file from ansible dynamic inventory webpage 
+- use below link
+
+https://raw.githubusercontent.com/ansible/ansible/stable-2.9/contrib/inventory/ec2.py
+
+https://raw.githubusercontent.com/ansible/ansible/stable-2.9/contrib/inventory/ec2.ini
+
+- Files already copied in same directory you can download
+*******************************************************************
+
+Step3
+*******************************************************************
+There are other config options in ec2.ini, including cache control and destination variables. By default, the ec2.ini file is configured for all Amazon cloud services, but you can comment out any features that aren’t applicable. For example, if you don’t have RDS or elasticache, you can set them to False :
+
+[ec2]
+...
+
+# To exclude RDS instances from the inventory, uncomment and set to False.
+rds = False
+
+# To exclude ElastiCache instances from the inventory, uncomment and set to False.
+elasticache = False
+...
+
+**********************************************************************
+
+Step4
+**********************************************************************
+veryfiying the dynamic inventory output
+
+#./ec2.py --list
+
+#ansible all -i ec2.py -m ping -e 'ansible_ssh_user=ec2-user ansible_ssh_private_key_file=rhel.pem'
+#ansible all -i ec2.py -m ping -e 'ansible_ssh_user=ubuntu ansible_ssh_private_key_file=rhel.pem'
+
+*********************************************************************
+
+
+
+
+
+
+
