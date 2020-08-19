@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  become: yes
+  tasks:
+          - name: replacing entire content of file
+            copy:
+                    dest: ~/aws/test
+                    content: 'ansible is awesome'
+                    force: yes
+
+
+
